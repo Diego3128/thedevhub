@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
-class RegisterNewUser extends FormRequest
+class RegisterUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,16 +14,15 @@ class RegisterNewUser extends FormRequest
     {
         return true;
     }
-
     /**
      * Prepare the data for validation.
      */
     protected function prepareForValidation()
     {
         $this->merge([
-            'name' => $this->name ? strtolower($this->name) : '',
-            'username' => $this->username ? strtolower($this->username) : '',
-            'email' => $this->email ? strtolower($this->email) : '',
+            'name' => $this->name ? strtolower($this->name) : null,
+            'username' => $this->username ? Str::slug(Str::lower($this->username), '-') : null,
+            'email' => $this->email ? strtolower($this->email) : null,
         ]);
     }
     /**
@@ -61,8 +61,8 @@ class RegisterNewUser extends FormRequest
 
             'password.required' => __('forms.password.required'),
             'password.confirmed' => __('forms.password.confirmed'),
-            'password.min' => __('forms.password.min'),
-            'password.max' => __('forms.password.max'),
+            'password.min' => __('forms.password.min', ['min' => 6]),
+            'password.max' => __('forms.password.max', ['max' => 100]),
         ];
     }
 }
