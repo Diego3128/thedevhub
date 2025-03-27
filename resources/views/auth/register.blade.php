@@ -28,7 +28,7 @@
                             aria-required="true" autocomplete="name" value="{{ @old('name', '') }}">
                         @error('name')
                             <p
-                                class="relative -top-1 rounded-bl-lg rounded-br-lg bg-red-400 text-white font-bold text-center p-1.5 text-sm">
+                                class="relative -top-1 rounded-bl-lg rounded-br-lg bg-red-200 text-red-500 font-bold text-center p-1.5 text-sm">
                                 {{ $message }}
                             </p>
                         @enderror
@@ -47,7 +47,7 @@
                             aria-required="true" autocomplete="username" value="{{ @old('username', '') }}">
                         @error('username')
                             <p
-                                class="relative -top-1 rounded-bl-lg rounded-br-lg bg-red-400 text-white font-bold text-center p-1.5 text-sm">
+                                class="relative -top-1 rounded-bl-lg rounded-br-lg bg-red-200 text-red-500 font-bold text-center p-1.5 text-sm">
                                 {{ $message }}
                             </p>
                         @enderror
@@ -66,7 +66,7 @@
                             aria-required="true" autocomplete="email" value="{{ @old('email', '') }}">
                         @error('email')
                             <p
-                                class="relative -top-1 rounded-bl-lg rounded-br-lg bg-red-400 text-white font-bold text-center p-1.5 text-sm">
+                                class="relative -top-1 rounded-bl-lg rounded-br-lg bg-red-200 text-red-500 font-bold text-center p-1.5 text-sm">
                                 {{ $message }}</p>
                         @enderror
                     </div>
@@ -84,7 +84,7 @@
                             aria-required="true" minlength="8" autocomplete="new-password">
                         @error('password')
                             <p
-                                class="relative -top-1 rounded-bl-lg rounded-br-lg bg-red-400 text-white font-bold text-center p-1.5 text-sm">
+                                class="relative -top-1 rounded-bl-lg rounded-br-lg bg-red-200 text-red-500 font-bold text-center p-1.5 text-sm">
                                 {{ $message }}</p>
                         @enderror
                     </div>
@@ -102,7 +102,7 @@
                             aria-required="true" minlength="8" autocomplete="new-password">
                         @error('password')
                             <p
-                                class="relative -top-1 rounded-bl-lg rounded-br-lg bg-red-400 text-white font-bold text-center p-1.5 text-sm">
+                                class="relative -top-1 rounded-bl-lg rounded-br-lg bg-red-200 text-red-500 font-bold text-center p-1.5 text-sm">
                                 {{ $message }}</p>
                         @enderror
                     </div>

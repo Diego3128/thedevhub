@@ -65,6 +65,21 @@ return [
         // messages when authenticating
         'created' => 'welcome to thedevhub :username.',
         'fail' => 'the registration has failed.',
+    ],
+    'login_form' => [
+        'maintitle' =>  'login to TheDevHub',
+        'submit_btn' => 'access',
+        'input_email' => [
+            'label' => 'email address',
+            'placeholder' => 'enter your email address'
+        ],
+        'input_password' => [
+            'label' => 'password',
+            'placeholder' => 'your password'
+        ],
+        // messages when authenticating
+        'logged' => 'welcome again :username.',
+        'fail' => 'invalid credentials. please try again.',
     ]
 
 ];
