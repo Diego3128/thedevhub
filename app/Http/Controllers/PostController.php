@@ -9,6 +9,7 @@ class PostController extends Controller
 {
     public function index()
     {
+        // dd('');
         return view('dashboard');
     }
 }

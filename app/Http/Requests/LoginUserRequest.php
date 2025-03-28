@@ -14,6 +14,14 @@ class LoginUserRequest extends FormRequest
         return true;
     }
 
+    // prepares selected fields for validation
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'remember' => $this->remember || false
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *

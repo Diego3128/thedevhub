@@ -57,7 +57,13 @@
                                 {{ $message }}</p>
                         @enderror
                     </div>
+
                 </fieldset>
+
+                <div class="flex items-center gap-2 text-gray-500">
+                    <label for="remember">Remember me?</label>
+                    <input type="checkbox" name="remember" id="remember" checked>
+                </div>
 
                 <button
                     class="uppercase mt-10 bg-sky-600 hover:bg-sky-500 transition-colors hover:cursor-pointer p-5 text-center font-bold text-white w-full rounded-lg"

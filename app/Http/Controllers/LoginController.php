@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginUserRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -11,10 +12,13 @@ class LoginController extends Controller
     {
         return view('auth.login');
     }
-    public function store(LoginUserRequest $request)
+    public function store(LoginUserRequest $request): RedirectResponse
     {
-        $credentials = $request->validated();
-        if (Auth::attempt(credentials: $credentials, remember: false)) {
+        $credentials = $request->only(keys: ['email', 'password']);
+
+        $remember = $request->input('remember');
+
+        if (Auth::attempt(credentials: $credentials, remember: $remember)) {
             // regenerate session
             $request->session()->regenerate();
             //redirect user
