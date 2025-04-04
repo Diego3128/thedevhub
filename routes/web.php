@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\PostController;
@@ -17,6 +18,11 @@ Route::get('/access',  [LoginController::class, 'index'])->name('login.index');
 Route::post('/access',  [LoginController::class, 'store'])->name('login.store');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/feed',  [PostController::class, 'index'])->name('post.index');
+    Route::get('/{username}',  [PostController::class, 'index'])->name('post.index');
+    Route::get('/posts/create',  [PostController::class, 'create'])->name('posts.create');
+    Route::post('/posts/store',  [PostController::class, 'store'])->name('posts.store');
+    //upload image
+    Route::post('/image/store', [ImageController::class, 'store'])->name('image.store');
+
     Route::post('/logout',  [LogoutController::class, 'logout'])->name('logout');
 });

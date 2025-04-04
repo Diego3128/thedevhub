@@ -22,7 +22,7 @@ class RegisterController extends Controller
             $user = User::create($validatedData);
             // log in user
             Auth::login(user: $user, remember: false);
-            return redirect()->route('post.index')->with('success', __('forms.register_form.created', ['username' => $user->username]));
+            return redirect()->route('post.index', ['username' => $user->username])->with('success', __('forms.register_form.created', ['username' => $user->username]));
         } catch (\Throwable $th) {
             Log::error("User registration failed: " . $th->getMessage(), ['exception' => $th]);
             return redirect()->back()->with('error', __('forms.register_form.fail'));

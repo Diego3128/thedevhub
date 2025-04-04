@@ -22,7 +22,7 @@ class LoginController extends Controller
             // regenerate session
             $request->session()->regenerate();
             //redirect user
-            return redirect()->route('post.index')->with('success', __('forms.login_form.logged', ['username' => Auth::user()->username]));
+            return redirect()->route('post.index', ['username' => Auth::user()->username])->with('success', __('forms.login_form.logged', ['username' => Auth::user()->username]));
         }
         // authentication failed
         return back()->with(['fail' => __('forms.login_form.fail'),]);
