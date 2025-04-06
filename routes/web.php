@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
@@ -18,11 +19,16 @@ Route::get('/access',  [LoginController::class, 'index'])->name('login.index');
 Route::post('/access',  [LoginController::class, 'store'])->name('login.store');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/{username}',  [PostController::class, 'index'])->name('post.index');
+    Route::get('/{username}',  [PostController::class, 'index'])->name('post.index')->withoutMiddleware(['auth']);
+    // create a post
     Route::get('/posts/create',  [PostController::class, 'create'])->name('posts.create');
     Route::post('/posts/store',  [PostController::class, 'store'])->name('posts.store');
-    //upload image
+    //upload post image
     Route::post('/image/store', [ImageController::class, 'store'])->name('image.store');
+    // show a post
+    Route::get('/{user:username}/posts/show/{post}', [PostController::class, 'show'])->name('posts.show')->withoutMiddleware(['auth']);
+    // store a comment
+    Route::post('/{user:username}/posts/{post}', [CommentController::class, 'store'])->name('comment.store');
 
     Route::post('/logout',  [LogoutController::class, 'logout'])->name('logout');
 });

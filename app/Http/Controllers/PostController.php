@@ -6,8 +6,8 @@ use App\Http\Requests\CreatePostRequest;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 
 class PostController extends Controller
 {
@@ -15,7 +15,8 @@ class PostController extends Controller
     {
         try {
             $user = User::where('username', $username)->firstOrFail();
-            return view('dashboard', compact('user'));
+            $posts = Post::where('user_id', $user->id)->paginate(30);
+            return view('dashboard', compact('user', 'posts'));
         } catch (ModelNotFoundException $e) {
             return view('errors.user-not-found', compact('username'));
         }
@@ -34,5 +35,10 @@ class PostController extends Controller
             'user_id' => Auth::user()->id
         ]);
         return redirect()->route('post.index', ['username' => Auth::user()->username])->with('success', 'A new post was created.');
+    }
+
+    public function show(User $user, Post $post)
+    {
+        return view('posts.show', compact('post', 'user'));
     }
 }
