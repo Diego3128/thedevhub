@@ -7,20 +7,34 @@
     <div
         class="flex flex-col md:flex-row bg-white shadow-md rounded-xl overflow-hidden py-3 lg:max-w-5xl 2xl:max-w-6xl mx-auto">
         {{-- Left Side (Post Content) --}}
-        <div class="md:flex-6/12 p-4">
-            <img class="w-full h-auto rounded-md mb-4 object-cover" src="{{ asset('storage/uploads/' . $post->image_path) }}"
-                alt="Image for {{ $post->title }}">
+        <div class="md:flex-6/12 p-4 ">
+            <div class="relative group rounded-md overflow-hidden border border-gray-200 shadow-sm">
+                <img draggable="false" class="w-full h-auto object-cover transition-opacity duration-300"
+                    src="{{ asset('storage/uploads/' . $post->image_path) }}" alt="Image for {{ $post->title }}">
+                @auth
+                    @can('delete', $post)
+                        <form method="POST" action="{{ route('posts.destroy', ['post' => $post->id]) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button
+                                class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-red-500 text-white text-xs px-3 py-1 rounded-lg shadow hover:bg-red-600"
+                                type="submit" title="Delete Post">
+                                Delete
+                            </button>
+                        </form>
+                    @endcan
+                @endauth
 
-            <div>
-                <p class="text-sm text-gray-500">{{ $post->created_at->diffForHumans() }}</p>
-                <p class="font-semibold text-gray-800">{{ $post->user->username }}</p>
-            </div>
-            <div>
-                <p class="text-base text-gray-800">{{ $post->description }}</p>
-            </div>
-
-            <div class="mt-1 flex items-center gap-2">
-                <span class="text-sm text-gray-600">0 likes</span>
+                <div class="p-4 bg-white">
+                    <div class="flex justify-between items-center mb-2">
+                        <p class="text-sm text-gray-500">{{ $post->created_at->diffForHumans() }}</p>
+                        <p class="font-semibold text-gray-700">{{ $post->user->username }}</p>
+                    </div>
+                    <p class="text-gray-800 text-sm">{{ $post->description }}</p>
+                    <div class="mt-2 text-sm text-gray-600">
+                        0 likes
+                    </div>
+                </div>
             </div>
         </div>
         {{-- Right Side (Comments) --}}

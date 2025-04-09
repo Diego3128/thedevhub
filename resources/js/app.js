@@ -84,7 +84,7 @@ function startDropzone() {
 }
 
 function cleanAlerts() {
-    const successAlert = document.querySelector('.success-alert') || null;
+    const successAlert = document.querySelector('.alert') || null;
     if (successAlert) {
         setTimeout(() => successAlert.remove(), 6000)
     }

@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -40,5 +42,17 @@ class PostController extends Controller
     public function show(User $user, Post $post)
     {
         return view('posts.show', compact('post', 'user'));
+    }
+
+    public function destroy($post)
+    {
+        try {
+            $post = Post::where('id', $post)->firstOrFail();
+            Gate::authorize('delete', $post); //404 if it's not autorized
+            $post->delete(); //image is deleted using a model event
+            return redirect()->route('post.index', ['username' => Auth::user()->username])->with('success', 'Post deleted successfully.');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('post.index', ['username' => Auth::user()->username])->with('error', 'The post could not be deleted.');
+        }
     }
 }

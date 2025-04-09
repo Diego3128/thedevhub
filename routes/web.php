@@ -29,6 +29,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/{user:username}/posts/show/{post}', [PostController::class, 'show'])->name('posts.show')->withoutMiddleware(['auth']);
     // store a comment
     Route::post('/{user:username}/posts/{post}', [CommentController::class, 'store'])->name('comment.store');
+    // delete a post
+    Route::delete('/posts/{post}',  [PostController::class, 'destroy'])->name('posts.destroy');
 
     Route::post('/logout',  [LogoutController::class, 'logout'])->name('logout');
 });
