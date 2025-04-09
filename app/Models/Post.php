@@ -28,6 +28,17 @@ class Post extends Model
         return $this->hasMany(Comment::class, 'post_id', 'id');
     }
 
+    public function likes(): HasMany
+    {
+        return $this->hasMany(Like::class, 'post_id', 'id');
+    }
+
+    // has the user liked the post?
+    public function checkLike(User $user): bool
+    {
+        return $this->likes()->where('user_id', $user->id)->exists();
+    }
+
     protected static function booted()
     {
         static::deleting(function ($post) {
