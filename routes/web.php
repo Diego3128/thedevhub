@@ -6,6 +6,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,7 @@ Route::get('/access',  [LoginController::class, 'index'])->name('login.index');
 Route::post('/access',  [LoginController::class, 'store'])->name('login.store');
 
 Route::middleware(['auth'])->group(function () {
+    // account
     Route::get('/{username}',  [PostController::class, 'index'])->name('post.index')->withoutMiddleware(['auth']);
     // create a post
     Route::get('/posts/create',  [PostController::class, 'create'])->name('posts.create');
@@ -36,6 +38,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/posts/{post}/likes', [LikeController::class, 'store'])->name('posts.like.store');
     // dislike a post
     Route::delete('/posts/{post}/likes', [LikeController::class, 'destroy'])->name('posts.like.destroy');
+    // edit profile
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profiles.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profiles.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profiles.update.password');
+    // serve profile pictures
+    Route::get('profile/image/{user:username}', [ProfileController::class, 'image'])->name('user.profile.image')->withoutMiddleware(['auth']);
+
 
     Route::post('/logout',  [LogoutController::class, 'logout'])->name('logout');
 });

@@ -23,8 +23,8 @@
                     <div class="relative group">
                         <a href="{{ route('post.index', ['username' => auth()->user()->username]) }}"
                             class="flex items-center space-x-2">
-                            <img src="{{ asset('img/account/usuario.svg') }}" alt="Profile Image"
-                                class="w-10 h-10 rounded-full object-cover">
+                            <img src="{{ route('user.profile.image', ['user' => auth()->user()->username]) }}"
+                                alt="Profile Image" class="w-10 h-10 rounded-full object-cover">
                             <span
                                 class="hidden xs:inline font-bold capitalize text-gray-600 text-sm">{{ auth()->user()->username }}</span>
                         </a>

@@ -17,11 +17,24 @@
 <div class="flex justify-center mb-10 pb-10">
     <div class="w-full max-w-3xl border border-amber-400 flex flex-col xs:flex-row gap-5 md:gap-8 xs:justify-around  ">
         <div class="border border-red-300 px-5 ">
-            <img class="w-36 md:w-48 mx-auto md:mx-0" src="{{ asset('img/account/usuario.svg') }}"
-                alt="user profile picture">
+            <img draggable="false" class="w-36 md:w-48 mx-auto md:mx-0 rounded-full"
+                src="{{ route('user.profile.image', ['user' => $user->username]) }}" alt="user profile picture">
         </div>
         <div class="border border-red-300 max-w-96 mx-auto xs:mx-0">
-            <p class="text-gray-700 text-xl xs:mb-3.5">{{ $user->username }}</p>
+            <div class="flex items-center gap-2.5 xs:mb-3.5">
+                @auth
+                    @if (Auth::user()->id === $user->id)
+                        <a href="{{ route('profiles.edit') }}" class="hover:bg-gray-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                            </svg>
+                        </a>
+                    @endif
+                @endauth
+                <p class="text-gray-700 text-xl">{{ $user->username }}</p>
+            </div>
 
             <div class="flex flex-col xs:flex-row xs:flex-wrap xs:justify-center gap-2 xs:gap-3">
                 <p class="flex justify-between items-center gap-1.5 md:gap-4 text-gray-800 text-sm">
@@ -36,7 +49,7 @@
 
                 <p class="flex justify-between items-center gap-1.5 md:gap-4 text-gray-800 text-sm">
                     <span class="font-normal capitalize">{{ __('profile.posts') }}</span>
-                    <span class="font-bold">{{ 0 }}</span>
+                    <span class="font-bold">{{ $user->posts->count() }}</span>
                 </p>
             </div>
 
