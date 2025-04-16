@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -61,5 +62,30 @@ class User extends Authenticatable
     public function removeLike(Post $post)
     {
         $this->likes()->where('post_id', $post->id)->delete();
+    }
+    // other implementation
+    // public function followers(): HasMany
+    // {
+    //     return $this->hasMany(Follower::class, 'user_id', 'id');
+    // }
+    //other implementation
+    // public function following()
+    // {
+    //     return $this->hasMany(Follower::class, 'follower_id', 'id');
+    // }
+    // user followers
+    public function followers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
+    }
+    // users this user follows
+    public function following(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
+    }
+    // checkf if the Auth user is following another user
+    public function isFollowing(User $user): bool
+    {
+        return $this->following()->where('user_id', $user->id)->exists();
     }
 }

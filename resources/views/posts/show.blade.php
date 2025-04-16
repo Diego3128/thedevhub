@@ -31,7 +31,7 @@
                         <p class="font-semibold text-gray-700">{{ $post->user->username }}</p>
                     </div>
                     <p class="text-gray-800 text-sm">{{ $post->description }}</p>
-                    <div class="mt-2 text-sm text-gray-600 border border-red-500 flex gap-1.5 items-center">
+                    <div class="mt-2 text-sm text-gray-600  flex gap-1.5 items-center">
                         @auth
                             @if ($post->checkLike(auth()->user()))
                                 {{-- dislike post --}}

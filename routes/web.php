@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\LoginController;
@@ -44,7 +45,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profiles.update.password');
     // serve profile pictures
     Route::get('profile/image/{user:username}', [ProfileController::class, 'image'])->name('user.profile.image')->withoutMiddleware(['auth']);
-
+    // follow users
+    Route::post('/{user:username}/follow', [FollowerController::class, 'store'])->name('users.follow');
+    Route::delete('/{user:username}/unfollow', [FollowerController::class, 'destroy'])->name('users.unfollow');
 
     Route::post('/logout',  [LogoutController::class, 'logout'])->name('logout');
 });

@@ -34,22 +34,42 @@
                     @endif
                 @endauth
                 <p class="text-gray-700 text-xl">{{ $user->username }}</p>
+                @auth
+                    {{-- show ooptions --}}
+                    @if (Auth::user()->id !== $user->id)
+                        {{-- checks if Auth::user is already following the user --}}
+                        @if (Auth::user()->isFollowing($user))
+                            <form method="POST" action="{{ route('users.unfollow', ['user' => $user->username]) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button
+                                    class="py-0.5 px-1 text-white cursor-pointer rounded-lg bg-gray-700 hover:opacity-90">unfollow</button>
+                            </form>
+                        @else
+                            <form method="POST" action="{{ route('users.follow', ['user' => $user->username]) }}">
+                                @csrf
+                                <button
+                                    class="py-0.5 px-1 text-white cursor-pointer rounded-lg bg-blue-600 hover:opacity-90">follow</button>
+                            </form>
+                        @endif
+                    @endif
+                @endauth
             </div>
 
             <div class="flex flex-col xs:flex-row xs:flex-wrap xs:justify-center gap-2 xs:gap-3">
                 <p class="flex justify-between items-center gap-1.5 md:gap-4 text-gray-800 text-sm">
-                    <span class="font-normal capitalize">{{ __('profile.followed') }}</span>
-                    <span class="font-bold">{{ 0 }}</span>
+                    <span class="font-normal capitalize">Followers</span>
+                    <span class="font-bold">{{ $user->followers()->count() }}</span>
                 </p>
 
                 <p class="flex justify-between items-center gap-1.5 md:gap-4 text-gray-800 text-sm">
                     <span class="font-normal capitalize">{{ __('profile.following') }}</span>
-                    <span class="font-bold">{{ 0 }}</span>
+                    <span class="font-bold">{{ $user->following()->count() }}</span>
                 </p>
 
                 <p class="flex justify-between items-center gap-1.5 md:gap-4 text-gray-800 text-sm">
                     <span class="font-normal capitalize">{{ __('profile.posts') }}</span>
-                    <span class="font-bold">{{ $user->posts->count() }}</span>
+                    <span class="font-bold">{{ $user->posts()->count() }}</span>
                 </p>
             </div>
 
@@ -68,7 +88,8 @@
             @forelse ($posts as $post)
                 <a href="{{ route('posts.show', ['user' => $user->username, 'post' => $post->id]) }}"
                     class="block group">
-                    <img src='{{ asset("storage/uploads/$post->image_path") }}' alt="Post image {{ $post->title }}"
+                    <img draggable="false" src='{{ asset("storage/uploads/$post->image_path") }}'
+                        alt="Post image {{ $post->title }}"
                         class="w-full h-40 xs:h-48 object-cover rounded-sm shadow-md transition-opacity duration-300 group-hover:opacity-70">
                 </a>
             @empty
