@@ -1,7 +1,7 @@
 <header class="border-b bg-white shadow border-gray-300 mb-10">
     <div class="container mx-auto p-4 flex justify-between items-center">
 
-        <h1 class="font-bold text-2xl text-black capitalize">thedevhub</h1>
+        <a href="{{ route('home') }}" class="font-bold text-2xl text-black capitalize">thedevhub</a>
 
         <nav class="flex gap-2">
             @auth

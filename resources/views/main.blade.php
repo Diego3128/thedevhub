@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('page_title', 'welcome')
+@section('page_title', 'Posts')
 
 @section('main_content')
-    <h1>Hi</h1>
+    <x-post-list :posts="$posts" />
 @endsection

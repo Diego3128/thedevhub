@@ -12,6 +12,8 @@
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
+
+    @livewireStyles
 </head>
 
 <body class="bg-gray-100 select-none relative">
@@ -33,6 +35,8 @@
             rights
             reserved &#169;.</p>
     </footer>
+
+    @livewireScripts
 </body>
 
 </html>
